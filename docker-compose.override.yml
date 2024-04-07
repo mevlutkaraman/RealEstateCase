@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  realestate.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "RealEstateDbConnectionString:Server=msSqlDb;Database=RealEstate;User Id=sa;Password=Sa123456"
+    ports:
+      - "8000:80"
+    restart: unless-stopped
+    networks:
+      - backend
+    links: 
+      - msSqlDb 
+     
+  msSqlDb:
+    container_name: msSqlDb
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1433:1433"
+    restart: unless-stopped
+    environment:
+      SA_PASSWORD: "Sa123456"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - ./sqlserver-data1:/var/lib/sqlserver/data
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"

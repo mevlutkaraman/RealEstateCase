@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  realestate.api:
+    image: ${DOCKER_REGISTRY-}realestateapi
+    build:
+      context: .
+      dockerfile: RealEstate.Api\Dockerfile
